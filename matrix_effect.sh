@@ -1,19 +1,21 @@
+speed=0.03
+cuantity=15
+numColums=80
 
-colorArray=`seq 80`
-for i in {1..80};do
+colorArray=`seq 1 $numColums`
+for i in $(seq 1 $numColums);do
 	colorArray[$i]=$((RANDOM%6))
 done
 
-echo ${colorArray[@]} 
 
 for j in {1..1000};do
 	line=""
-for i in {1..80}; do
+for i in $(seq 1 $numColums); do
 	color=$((16+(${colorArray[$i]}*6)))
 	line+="\e[38;5;${color}m$((RANDOM%10))\e[0m"
 	if [ ${colorArray[$i]} -eq 0 ];
 	then
-		if [ $((RANDOM%15)) = 3 ];
+		if [ $((RANDOM%$cuantity)) = 3 ];
 		then
 			colorArray[$i]=1
 		fi
@@ -22,6 +24,6 @@ for i in {1..80}; do
 	fi
 done;
 echo -e $line
-sleep 0.03
+sleep $speed
 done
 
